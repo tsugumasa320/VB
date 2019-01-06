@@ -1,0 +1,21 @@
+Option Explicit
+
+Sub フォルダーを削除()
+
+Dim fso As FileSystemObject
+Dim fldPath As String
+
+ThisWorkbook.Save
+ThisWorkbook.ChangeFileAccess Mode:=xlReadOnly
+
+fldPath = ThisWorkbook.Path & "\*.*"　'好きなパスを記入...
+Set fso = CreateObject("Scripting.FileSystemObject")
+fso.DeleteFolder fldPath
+'fso,DeleteFile fldPath
+
+Set fso = Nothing
+
+Kill ThisWorkbook.FullName
+ThisWorkbook.Close(False)
+
+End Sub
