@@ -1,0 +1,15 @@
+Sub 開いてるブックの全シートをA1に移動して保存()
+
+Dim n
+
+For n = Worksheets.Count To 1 Step -1
+
+	Worksheets(n).Active
+	Range("A1").Select
+
+	Next n
+
+ActiveWorkbook.Save
+ActiveWorkbook.Close
+
+End Sub

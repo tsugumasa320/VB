@@ -1,0 +1,55 @@
+Option Explicit
+
+Sub ファイルを開いてA1で保存()
+
+	Dim OpenFileName As Variant, Target
+	Dim wb As Workbook
+	Dim n
+
+	On Error GoTo ErrLabel
+
+	With Application
+		.ScreenUpdating = False
+		.EnableEvents = False
+		.Calculation = xlCalculationManual
+	End With
+
+	OpenFileName = Application.GetOpenFilename(FileFilter:="Microsoft Excelブック,*.xls?,MultiSelect:=True)
+
+	If IsArray(OpenFileName) Then
+
+		For Each Target In OpenFileName
+
+			Set wb = Workbooks.Count To 1 Step -1
+
+			For n = Worksheets.Count To 1 Step -1
+
+				Worksheets(n).Active
+				Range("A1").Select
+
+			Next n
+
+			wb.save
+			wb.Close
+			Set wb = Nothing
+
+		Next Target
+
+		MsgBox"完了しました"
+
+	Else
+		MsgBox"キャンセルされました"
+	End If
+
+	With Application
+		.ScreenUpdating = True
+		.EnableEvents = True
+		.Calculation = xlCalculationAutomatic
+	End With
+
+Exit Sub
+
+ErrLabel:
+	MsgBox "エラーが発生しました、やり直してください"
+
+End Sub
